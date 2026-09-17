@@ -55,4 +55,10 @@ La API quedara disponible en `http://127.0.0.1:5000`.
 - `DELETE /users/<user_id>`
 - `POST /users/<user_id>/posts` con `{ "title": "Titulo", "content": "Contenido" }`
 
+## Ejemplos de Postman
+
+Importa [postman/capas.postman_collection.json](postman/capas.postman_collection.json) en Postman.
+
+La colección usa `http://127.0.0.1:5000` como `baseUrl`. Ejecuta primero `Crear usuario`: su script guarda automáticamente el identificador en `userId` para las solicitudes siguientes.
+
 Los datos se guardan en `data.json`.
