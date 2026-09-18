@@ -22,17 +22,21 @@ def get_user(user_id):
 
 @app.route("/users", methods=["POST"])
 def create_user():
-    data = request.get_json()
-    if not data.get("name") or not data.get("email"):
-        return jsonify({"message": "Name and email are required"}), 400
-    user = UserService.create_user(data["name"], data["email"])
+    data = request.get_json(silent=True) or {}
+    try:
+        user = UserService.create_user(data.get("name"), data.get("email"))
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 400
     return jsonify(user.to_dict()), 201
 
 
 @app.route("/users/<int:user_id>", methods=["PUT"])
 def update_user(user_id):
-    data = request.get_json()
-    user = UserService.update_user(user_id, data.get("name"), data.get("email"))
+    data = request.get_json(silent=True) or {}
+    try:
+        user = UserService.update_user(user_id, data.get("name"), data.get("email"))
+    except ValueError as e:
+        return jsonify({"message": str(e)}), 400
     if user:
         return jsonify(user.to_dict()), 200
     return jsonify({"message": "User not found"}), 404
